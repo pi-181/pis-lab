@@ -17,10 +17,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="blog.html">Blog</a>
+            <a class="navbar-brand" href="blog.php">Blog</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#">Увійти</a></li>
-                <li class="nav-item active"><a class="nav-link" href="blog.html">Дім <span class="sr-only">(відкрито)</span></a></li>
+                <li class="nav-item active"><a class="nav-link" href="blog.php">Дім <span class="sr-only">(відкрито)</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Новий запис</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Відправити повідомлення</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Фото</a></li>
@@ -34,17 +34,25 @@
 <main>
     <div class="container-fluid">
         <div class="container">
-            <div class="row">
-                <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h1>
-                <p>
-                Praesent accumsan urna vitae enim fringilla feugiat. Nullam ut malesuada mauris. Duis justo arcu, volutpat vitae enim ac, porttitor pellentesque felis. Vestibulum nec volutpat mi, sit amet malesuada felis. Maecenas ullamcorper id ex at maximus. Praesent quis dui feugiat eros blandit sagittis a non lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <br>
-                <h2>Etiam quis fermentum est.</h2>
-                <p>
-                 Integer ipsum dolor, fermentum a sagittis at, sagittis sit amet nulla. Suspendisse leo metus, consequat quis tempor sodales, hendrerit sed felis. Nullam porttitor malesuada consectetur. Etiam rutrum, sem vel commodo convallis, nunc nibh scelerisque mi, eget viverra ipsum nisl nec lorem. Aenean sed purus nec sapien dignissim euismod eleifend eget tortor. Nullam nec venenatis urna. Cras eleifend metus non ex pellentesque, ac viverra nisi sagittis. Nam ac cursus risus, sit amet consequat massa. Sed faucibus dui sed ante consectetur, sit amet volutpat odio malesuada.
-                </p>
-            </div>
+            <?php
+            require_once ("connections/pis_blog.php");
+
+            $result = mysqli_query($connection, "SELECT * FROM notes ORDER BY created");
+            while ($note = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+
+                if (strlen($content = $note['article']) > 1400) {
+                    $content = substr($content, 0, 997) . '...';
+                }
+
+                echo '<div class="row">';
+                echo '<h1> <a href="comments.php?note=' . $note['id'] . '">'. $note['title'] . '</a></h1>' . $note['created'] . '<br>';
+                echo '<p>' . $content . '</p><br>';
+                echo '</div><hr>';
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($connection);
+            ?>
         </div>
     </div>
 </main>
