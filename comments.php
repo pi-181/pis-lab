@@ -28,6 +28,7 @@
                 <li class="nav-item"><a class="nav-link" href="#">Файли</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Адміністратору</a></li>
                 <li class="nav-item"><a class="nav-link" href="inform.html">Інформація</a></li>
+                <li class="nav-item"><a class="nav-link" href="email.php">Email</a></li>
             </ul>
         </div>
     </nav>

@@ -20,14 +20,14 @@
             <a class="navbar-brand" href="blog.php">Blog</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#">Увійти</a></li>
-                <li class="nav-item active"><a class="nav-link" href="blog.php">Дім <span class="sr-only">(відкрито)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="blog.php">Дім</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Новий запис</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Відправити повідомлення</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Фото</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Файли</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Адміністратору</a></li>
                 <li class="nav-item"><a class="nav-link" href="inform.html">Інформація</a></li>
-                <li class="nav-item"><a class="nav-link" href="email.php">Email</a></li>
+                <li class="nav-item active"><a class="nav-link" href="email.php">Email <span class="sr-only">(відкрито)</span></a></li>
             </ul>
         </div>
     </nav>
@@ -35,24 +35,26 @@
 <main>
     <div class="container-fluid">
         <div class="container">
+
+            <form method="post" action="email.php">
+                <div class="form-group">
+                    <label for="subject">Тема</label>
+                    <input type="text" class="form-control" name="subject" id="subject">
+                </div>
+                <div class="form-group">
+                    <label for="text">Текст</label>
+                    <textarea class="form-control" name="text" id="text" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Відправити</button>
+            </form>
+
             <?php
-            require_once ("connections/pis_blog.php");
-
-            $result = mysqli_query($connection, "SELECT * FROM notes ORDER BY created");
-            while ($note = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-
-                if (strlen($content = $note['article']) > 1400) {
-                    $content = substr($content, 0, 997) . '...';
-                }
-
-                echo '<div class="row">';
-                echo '<h1> <a href="comments.php?note=' . $note['id'] . '">'. $note['title'] . '</a></h1>' . $note['created'] . '<br>';
-                echo '<p>' . $content . '</p><br>';
-                echo '</div><hr>';
+            $subject = $_POST['subject'];
+            $text = $_POST['text'];
+            if (isset($subject, $text) && strlen($subject) > 0 && strlen($text) > 0) {
+                mail('admin@travel.notes', $_POST['subject'], $_POST['text']);
+                echo '<br><div class="alert alert-success" role="alert">Mail success sent!</div>';
             }
-
-            mysqli_free_result($result);
-            mysqli_close($connection);
             ?>
         </div>
     </div>
