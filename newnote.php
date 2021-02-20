@@ -63,6 +63,7 @@
                     mysqli_query($connection,
                         "INSERT INTO notes (title, article, created) VALUES ('$title', '$article', '$created')");
                     echo '<br><div class="alert alert-success" role="alert">Новий запис створений!</div>';
+                    mysqli_close($connection);
                 } else {
                     echo '<br><div class="alert alert-danger" role="alert">'
                         .'Неправильно заповнена форма!'

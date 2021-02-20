@@ -46,6 +46,8 @@
 
             $result = mysqli_query($connection, "SELECT * FROM notes WHERE id = $noteId");
             if (mysqli_num_rows($result) < 1) {
+                mysqli_free_result($result);
+                mysqli_close($connection);
                 die('<p>Невідома замітка</p>');
             }
 
@@ -88,6 +90,9 @@
                         .'</div>';
                 }
             }
+
+            mysqli_free_result($result);
+            mysqli_close($connection);
             ?>
         </div>
     </div>
