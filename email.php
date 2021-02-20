@@ -54,9 +54,9 @@
             if (isset($subject, $text)) {
                 if (strlen($subject) > 0 && strlen($text) > 0) {
                     mail('admin@travel.notes', $subject, $text);
-                    echo '<br><div class="alert alert-success" role="alert">Mail success sent!</div>';
+                    echo '<br><div class="alert alert-success" role="alert">Повідомлення успішно відправлено!</div>';
                 } else {
-                    echo '<br><div class="alert alert-danger" role="alert">Fill all fields!</div>';
+                    echo '<br><div class="alert alert-danger" role="alert">Заповніть всі поля!</div>';
                 }
             }
             ?>
