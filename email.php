@@ -51,9 +51,14 @@
             <?php
             $subject = $_POST['subject'];
             $text = $_POST['text'];
-            if (isset($subject, $text) && strlen($subject) > 0 && strlen($text) > 0) {
-                mail('admin@travel.notes', $subject, $text);
-                echo '<br><div class="alert alert-success" role="alert">Mail success sent!</div>';
+
+            if (isset($subject, $text)) {
+                if (strlen($subject) > 0 && strlen($text) > 0) {
+                    mail('admin@travel.notes', $subject, $text);
+                    echo '<br><div class="alert alert-success" role="alert">Mail success sent!</div>';
+                } else {
+                    echo '<br><div class="alert alert-danger" role="alert">Fill all fields!</div>';
+                }
             }
             ?>
         </div>
