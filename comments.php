@@ -55,6 +55,8 @@
             echo '<div class="row">';
             echo '<h1>' . $note['title'] . '</h1>' . $note['created'] . '<br>';
             echo '<p>' . $note['article'] . '</p><br>';
+            echo '<a role="button" class="btn btn-outline-primary mx-1" href="editnote.php?note=' . $note_id . '">Редагувати</a>';
+            echo '<a role="button" class="btn btn-outline-danger mx-1" href="deletenote.php?note=' . $note_id . '">Видалити</a>';
             echo '</div><hr>';
 
             mysqli_free_result($result);
