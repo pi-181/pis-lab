@@ -21,7 +21,7 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#">Увійти</a></li>
                 <li class="nav-item"><a class="nav-link" href="blog.php">Дім</a></li>
-                <li class="nav-item active"><a class="nav-link" href="newnote.php">Новий запис <span class="sr-only">(відкрито)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="newnote.php">Новий запис</a></li>
                 <li class="nav-item"><a class="nav-link" href="email.php">Відправити повідомлення</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Фото</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Файли</a></li>
