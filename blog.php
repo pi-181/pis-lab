@@ -37,7 +37,7 @@
             <?php
             require_once ("connections/pis_blog.php");
 
-            $result = mysqli_query($connection, "SELECT * FROM notes ORDER BY created");
+            $result = mysqli_query($connection, "SELECT * FROM notes ORDER BY created DESC");
             while ($note = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
                 if (strlen($content = $note['article']) > 1400) {
