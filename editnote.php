@@ -40,47 +40,47 @@
                 die("Замітка не вказана!");
             }
 
-            $rawNote = $_GET['note'];
+            $raw_note = $_GET['note'];
             require_once ("connections/pis_blog.php");
-            $noteId = mysqli_real_escape_string($connection, $rawNote);
+            $note_id = mysqli_real_escape_string($connection, $raw_note);
 
-            $result = mysqli_query($connection, "SELECT * FROM notes WHERE id = $noteId");
+            $result = mysqli_query($connection, "SELECT * FROM notes WHERE id = $note_id");
             if (mysqli_num_rows($result) < 1) {
                 mysqli_free_result($result);
                 mysqli_close($connection);
                 die('<p>Невідома замітка</p>');
             }
 
-            $dbNote = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $dbTitle = $dbNote['title'];
-            $dbArticle = $dbNote['article'];
+            $db_note = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $db_title = $db_note['title'];
+            $db_article = $db_note['article'];
             ?>
             <form method="post" action="">
-                <input type="text" class="form-control" name="note" id="note" value="<?php echo $noteId?>" hidden>
+                <input type="text" class="form-control" name="note" id="note" value="<?php echo $note_id?>" hidden>
                 <div class="form-group">
                     <label for="title">Заголовок</label>
-                    <input type="text" class="form-control" aria-describedby="titleHelp" name="title" id="title" value="<?php echo $dbTitle?>">
+                    <input type="text" class="form-control" aria-describedby="titleHelp" name="title" id="title" value="<?php echo $db_title?>">
                     <small id="titleHelp" class="form-text text-muted">* Від 10 до 100 символів</small>
                 </div>
                 <div class="form-group">
                     <label for="article">Зміст</label>
-                    <textarea class="form-control" aria-describedby="articleHelp" name="article" id="article" rows="3"><?php echo $dbArticle?></textarea>
+                    <textarea class="form-control" aria-describedby="articleHelp" name="article" id="article" rows="3"><?php echo $db_article?></textarea>
                     <small id="articleHelp" class="form-text text-muted">* Мінімум 60 символів</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Зберегти запис</button>
             </form>
 
             <?php
-            $rawTitle = $_POST['title'];
-            $rawArticle = $_POST['article'];
+            $raw_title = $_POST['title'];
+            $raw_article = $_POST['article'];
 
-            if (isset($rawNote, $rawTitle, $rawArticle) ) {
-                if (strlen($rawTitle) > 10 && strlen($rawArticle) > 60) {
+            if (isset($raw_note, $raw_title, $raw_article) ) {
+                if (strlen($raw_title) > 10 && strlen($raw_article) > 60) {
                     require_once("connections/pis_blog.php");
-                    $title = mysqli_real_escape_string($connection, $rawTitle);
-                    $article = mysqli_real_escape_string($connection, $rawArticle);
+                    $title = mysqli_real_escape_string($connection, $raw_title);
+                    $article = mysqli_real_escape_string($connection, $raw_article);
 
-                    mysqli_query($connection, "UPDATE notes SET title = '$title', article = '$article' WHERE id = $noteId");
+                    mysqli_query($connection, "UPDATE notes SET title = '$title', article = '$article' WHERE id = $note_id");
                     echo '<br><div class="alert alert-success" role="alert">Запис збережено!</div>';
                 } else {
                     echo '<br><div class="alert alert-danger" role="alert">'

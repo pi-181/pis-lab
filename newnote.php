@@ -50,14 +50,14 @@
             </form>
 
             <?php
-            $rawTitle = $_POST['title'];
-            $rawArticle = $_POST['article'];
+            $raw_title = $_POST['title'];
+            $raw_article = $_POST['article'];
 
-            if (isset($rawTitle, $rawArticle) ) {
-                if (strlen($rawTitle) > 10 && strlen($rawArticle) > 60) {
+            if (isset($raw_title, $raw_article) ) {
+                if (strlen($raw_title) > 10 && strlen($raw_article) > 60) {
                     require_once("connections/pis_blog.php");
-                    $title = mysqli_real_escape_string($connection, $rawTitle);
-                    $article = mysqli_real_escape_string($connection, $rawArticle);
+                    $title = mysqli_real_escape_string($connection, $raw_title);
+                    $article = mysqli_real_escape_string($connection, $raw_article);
                     $created = date('Y-m-d');
 
                     mysqli_query($connection,
