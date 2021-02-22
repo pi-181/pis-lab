@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Comments</title>
+    <title>Новий коментар</title>
 </head>
 
 <body>
@@ -20,8 +20,7 @@
             <a class="navbar-brand" href="blog.php">Blog</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#">Увійти</a></li>
-                <li class="nav-item active"><a class="nav-link" href="blog.php">Дім <span
-                                class="sr-only">(відкрито)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="blog.php">Дім</a></li>
                 <li class="nav-item"><a class="nav-link" href="newnote.php">Новий запис</a></li>
                 <li class="nav-item"><a class="nav-link" href="email.php">Відправити повідомлення</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Фото</a></li>
@@ -55,31 +54,50 @@
             echo '<div class="row">';
             echo '<h1>' . $note['title'] . '</h1>' . $note['created'] . '<br>';
             echo '<p>' . $note['article'] . '</p><br>';
-            echo '<a role="button" class="btn btn-outline-primary mx-1" href="editnote.php?note=' . $note_id . '">Редагувати</a>';
-            echo '<a role="button" class="btn btn-outline-danger mx-1" href="deletenote.php?note=' . $note_id . '">Видалити</a>';
             echo '</div><hr>';
-            echo '<a role="button" class="btn btn-outline-primary my-1" href="newcomment.php?note=' . $note_id . '">Додати коментар</a>';
             mysqli_free_result($result);
+            ?>
 
-            function echo_comment($id, $created, $author, $comment) {
-                echo '<div class="card bg-light mb-3" style="max-width: 18rem;"><div class="card-header"><div class="row"><div class="col">'
-                    .$created.'</div><div class="col text-lg-right">'
-                    .'<a role="button" href="deletecomment.php?comment=' . $id . '">Видалити</a></div>'
-                    .'</div></div>';
-                echo '<div class="card-body"><h5 class="card-title">' . $author . '</h5>';
-                echo '<p class="card-text">' . $comment . '</p></div></div>';
-            }
+            <div class="row">
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="author">Автор</label>
+                        <input type="text" class="form-control" name="author" id="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Зміст</label>
+                        <textarea class="form-control" name="text" id="text" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Відправити коментар</button>
+                </form>
+            </div>
+            <div class="row text-right">
+                <?php
+                echo '<a role="button" href="comments.php?note=' . $note_id . '">Перейти до коментарів</a></div>';
+                ?>
+            </div>
 
-            $result = mysqli_query($connection, "SELECT * FROM comments WHERE art_id = $note_id ORDER BY created");
-            if (mysqli_num_rows($result) < 1) {
-                echo '<p>Цей запис ще ніхто не коментував</p><br>';
-            } else {
-                while ($comment = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    echo_comment($comment['id'], $comment['created'], $comment['author'], $comment['comment']);
+            <?php
+            $raw_author = $_POST['author'];
+            $raw_text = $_POST['text'];
+
+            if (isset($raw_author, $raw_text) ) {
+                if (strlen($raw_author) > 3 && strlen($raw_text) > 10) {
+                    $author = mysqli_real_escape_string($connection, $raw_author);
+                    $text = mysqli_real_escape_string($connection, $raw_text);
+                    $created = date('Y-m-d');
+
+                    mysqli_query($connection, "INSERT INTO comments (author, comment, created, art_id) VALUES ('$author', '$text', '$created', '$note_id')");
+                    echo '<br><div class="alert alert-success" role="alert">Новий коментар створений!</div>';
+                } else {
+                    echo '<br><div class="alert alert-danger" role="alert">'
+                        . 'Неправильно заповнена форма!'
+                        . '<br>'
+                        . 'Мінімальна кількість символів імені автору від 3, а змісту від 10.'
+                        . '</div>';
+
                 }
             }
-
-            mysqli_free_result($result);
             mysqli_close($connection);
             ?>
         </div>
