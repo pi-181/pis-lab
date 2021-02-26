@@ -26,24 +26,83 @@
                 <li class="nav-item"><a class="nav-link" href="#">Фото</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Файли</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Адміністратору</a></li>
-                <li class="nav-item active"><a class="nav-link" href="inform.php">Інформація <span class="sr-only">(відкрито)</span></a></li>
+                <li class="nav-item active"><a class="nav-link" href="inform.php">Інформація <span class="sr-only">(відкрито)</span></a>
+                </li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
     <div class="container-fluid">
+        <?php
+        require_once("connections/pis_blog.php");
+
+        // count of all notes
+        $result = mysqli_query($connection, 'SELECT COUNT(*) as notes_count FROM notes');
+        $notes_count = mysqli_fetch_array($result, MYSQLI_ASSOC)['notes_count'];
+        mysqli_free_result($result);
+
+        // count of all comments
+        $result = mysqli_query($connection, 'SELECT COUNT(*) as comments_count FROM comments');
+        $comments_count = mysqli_fetch_array($result, MYSQLI_ASSOC)['comments_count'];
+        mysqli_free_result($result);
+
+        // date init
+        $date_array = getdate();
+        $begin_date = date("Y-m-d", mktime(0, 0, 0, $date_array['mon'], 1, $date_array['year']));
+        $end_date = date("Y-m-d", mktime(0, 0, 0, $date_array['mon'] + 1, 0, $date_array['year']));
+
+        // notes for last month
+        $result = mysqli_query($connection, "SELECT COUNT(*) AS month_notes FROM notes WHERE created>='$begin_date' AND created<='$end_date'");
+        $month_notes_count = mysqli_fetch_assoc($result)['month_notes'];
+        mysqli_free_result($result);
+
+        // comments for last month
+        $result = mysqli_query($connection, "SELECT COUNT(*) AS month_comments FROM comments WHERE created>='$begin_date' AND created<='$end_date'");
+        $month_comments_count = mysqli_fetch_assoc($result)['month_comments'];
+        mysqli_free_result($result);
+
+        // latest note
+        $result = mysqli_query($connection, 'SELECT id, title FROM notes ORDER BY created DESC LIMIT 0,1');
+        $latest_note = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
+
+        // most commented note
+        $result = mysqli_query($connection, 'SELECT notes.id, notes.title FROM comments, notes '
+            .'WHERE comments.art_id = notes.id '
+            .'GROUP BY notes.id '
+            .'ORDER BY COUNT(comments.id) '
+            .'DESC LIMIT 0,1');
+        $most_commented_note = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
+        mysqli_close($connection);
+        ?>
+
         <div class="container">
             <div class="row">
-                <h2>Etiam quis fermentum est.</h2>
-                <p>
-                    Integer ipsum dolor, fermentum a sagittis at, sagittis sit amet nulla. Suspendisse leo metus,
-                    consequat quis tempor sodales, hendrerit sed felis. Nullam porttitor malesuada consectetur.
-                    Etiam rutrum, sem vel commodo convallis, nunc nibh scelerisque mi, eget viverra ipsum nisl nec lorem.
-                    Aenean sed purus nec sapien dignissim euismod eleifend eget tortor. Nullam nec venenatis urna.
-                    Cras eleifend metus non ex pellentesque, ac viverra nisi sagittis. Nam ac cursus risus, sit amet consequat massa.
-                    Sed faucibus dui sed ante consectetur, sit amet volutpat odio malesuada.
-                </p>
+                <h2>Статистика</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Зроблено записів: <?php echo $notes_count?></p><br>
+                </div>
+                <div class="col-md-4">
+                    <p>Залишено коментарів: <?php echo $comments_count?></p><br>
+                </div>
+                <div class="col-md-4">
+                    <p>За останній місяць створено записів: <?php echo $month_notes_count?></p><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>За останній місяць залишено коментарів: <?php echo $month_comments_count?></p><br>
+                </div>
+                <div class="col-md-4">
+                    <p>Останній запис: <a href="comments.php?note=<?php echo $latest_note['id']?>"><?php echo $latest_note['title']?></a></p><br>
+                </div>
+                <div class="col-md-4">
+                    <p>Найбільш обговорюваний запис:<a href="comments.php?note=<?php echo $most_commented_note['id']?>"><?php echo $most_commented_note['title']?></a></p><br>
+                </div>
             </div>
         </div>
     </div>
