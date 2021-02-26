@@ -30,6 +30,12 @@
                 <li class="nav-item"><a class="nav-link" href="inform.php">Інформація</a></li>
             </ul>
         </div>
+        <form class="form-inline" action="search.php" method="get">
+            <label>
+                <input type="text" class="form-control mb-2 mr-sm-2"  name="usersearch" placeholder="Що будемо шукати?">
+            </label>
+            <button type="submit" class="btn btn-primary mb-2">Знайти</button>
+        </form>
     </nav>
 </header>
 <main>

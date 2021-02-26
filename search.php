@@ -31,7 +31,7 @@
         </div>
         <form class="form-inline" action="search.php" method="get">
             <label>
-                <input type="text" class="form-control mb-2 mr-sm-2"  name="usersearch" placeholder="Що будемо шукати?">
+                <input type="text" class="form-control mb-2 mr-sm-2" name="usersearch" placeholder="Що будемо шукати?" value="<?php echo $_GET['usersearch']?>">
             </label>
             <button type="submit" class="btn btn-primary mb-2">Знайти</button>
         </form>
@@ -41,11 +41,34 @@
     <div class="container-fluid">
         <div class="container">
             <?php
-            require_once ("connections/pis_blog.php");
+            require_once("connections/pis_blog.php");
 
-            $result = mysqli_query($connection, "SELECT * FROM notes ORDER BY created DESC");
-            while ($note = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $user_search = $_GET['usersearch'];
+            if (!isset($user_search) || empty($user_search)) {
+                die('Рядок пушуку пустий!');
+            }
 
+            $where_list = array();
+            $query = "SELECT * FROM notes";
+
+            $clean_search = str_replace(',', ' ', $user_search);
+            $search_words = explode(' ', $user_search);
+
+            $final_search_words = array();
+            foreach ($search_words as $word) {
+                if (!empty($word)) {
+                    $final_search_words[] = mysqli_real_escape_string($connection, $word);
+                }
+            }
+
+            $where_list[] = " article LIKE '%$word%'";
+            $where_clause = implode(' OR ', $where_list);
+            if (!empty($where_clause)) {
+                $query .= " WHERE $where_clause";
+            }
+
+            $result = mysqli_query($connection, $query);
+            while ($note = mysqli_fetch_array($result)) {
                 if (strlen($content = $note['article']) > 1400) {
                     $content = substr($content, 0, 997) . '...';
                 }
