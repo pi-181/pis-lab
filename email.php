@@ -23,8 +23,8 @@
                 <li class="nav-item"><a class="nav-link" href="blog.php">Дім</a></li>
                 <li class="nav-item"><a class="nav-link" href="newnote.php">Новий запис</a></li>
                 <li class="nav-item active"><a class="nav-link" href="email.php">Відправити повідомлення <span class="sr-only">(відкрито)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Фото</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Файли</a></li>
+                <li class="nav-item"><a class="nav-link" href="photo.php">Фото</a></li>
+                <li class="nav-item"><a class="nav-link" href="files.php">Файли</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Адміністратору</a></li>
                 <li class="nav-item"><a class="nav-link" href="inform.php">Інформація</a></li>
             </ul>

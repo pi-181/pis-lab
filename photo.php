@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Blog</title>
+    <title>Фото</title>
 </head>
 
 <body>
@@ -20,10 +20,10 @@
             <a class="navbar-brand" href="blog.php">Blog</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#">Увійти</a></li>
-                <li class="nav-item active"><a class="nav-link" href="blog.php">Дім <span class="sr-only">(відкрито)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="blog.php">Дім</a></li>
                 <li class="nav-item"><a class="nav-link" href="newnote.php">Новий запис</a></li>
                 <li class="nav-item"><a class="nav-link" href="email.php">Відправити повідомлення</a></li>
-                <li class="nav-item"><a class="nav-link" href="photo.php">Фото</a></li>
+                <li class="nav-item active"><a class="nav-link" href="photo.php">Фото <span class="sr-only">(відкрито)</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="files.php">Файли</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Адміністратору</a></li>
                 <li class="nav-item"><a class="nav-link" href="inform.php">Інформація</a></li>
@@ -40,25 +40,7 @@
 <main>
     <div class="container-fluid">
         <div class="container">
-            <?php
-            require_once ("connections/pis_blog.php");
 
-            $result = mysqli_query($connection, "SELECT * FROM notes ORDER BY created DESC");
-            while ($note = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-
-                if (strlen($content = $note['article']) > 1400) {
-                    $content = substr($content, 0, 997) . '...';
-                }
-
-                echo '<div class="row">';
-                echo '<h1> <a href="comments.php?note=' . $note['id'] . '">'. $note['title'] . '</a></h1>' . $note['created'] . '<br>';
-                echo '<p>' . $content . '</p><br>';
-                echo '</div><hr>';
-            }
-
-            mysqli_free_result($result);
-            mysqli_close($connection);
-            ?>
         </div>
     </div>
 </main>
