@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_notes" value="name:id;datatype:int,name:created;datatype:date,name:title;datatype:string,name:article;datatype:blob" />
+	<infoitem key="UD_comments" value="name:id;datatype:int,name:created;datatype:date,name:author;datatype:string,name:comment;datatype:string,name:art_id;datatype:int" />
+</info>

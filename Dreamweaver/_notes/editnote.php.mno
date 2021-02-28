@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_note" value="name:id;datatype:int,name:created;datatype:date,name:title;datatype:string,name:article;datatype:blob" />
+</info>
