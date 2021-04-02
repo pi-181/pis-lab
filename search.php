@@ -61,7 +61,10 @@
                 }
             }
 
-            $where_list[] = " article LIKE '%$word%'";
+            foreach ($final_search_words as $word) {
+                $where_list[] = " article LIKE '%$word%'";
+            }
+
             $where_clause = implode(' OR ', $where_list);
             if (!empty($where_clause)) {
                 $query .= " WHERE $where_clause";
