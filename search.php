@@ -60,7 +60,7 @@
             }
 
             foreach ($final_search_words as $word) {
-                $where_list[] = " article LIKE '%$word%'";
+                $where_list[] = " article LIKE '%$word%' OR title LIKE '%$word%'";
             }
 
             $where_clause = implode(' OR ', $where_list);
