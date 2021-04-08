@@ -17,7 +17,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="blog.html">Blog</a>
+            <a class="navbar-brand" href="blog.php">Blog</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="blog.php">Дім</a></li>
                 <li class="nav-item"><a class="nav-link" href="newnote.php">Новий запис</a></li>
