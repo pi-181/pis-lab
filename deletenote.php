@@ -88,7 +88,11 @@
             <?php
             if ($submit) {
                 $delete_result = mysqli_query($connection, "DELETE FROM notes WHERE id = $note_id");
-                echo '<br><div class="alert alert-success" role="alert">Запис видалено!</div>';
+                if ($delete_result) {
+                    echo '<br><div class="alert alert-success" role="alert">Запис видалено!</div>';
+                } else {
+                    echo '<br><div class="alert alert-danger" role="alert">Запис не видалено!</div>';
+                }
             }
 
             mysqli_close($connection);
