@@ -107,7 +107,9 @@ closedir($image_dir_id);
                             ?>
                             <tr>
                                 <th scope='row'><?php echo $i + 1 ?></th>
-                                <td><p><a href='/photo/<?php echo $array_files[$i] ?>'
+                                <td><p>
+                                        <img src="/photo/<?php echo $array_files[$i]?>" width="100px"/>
+                                        <a href='/photo/<?php echo $array_files[$i] ?>'
                                           target='_blank'><?php echo $array_files[$i] ?></a></p>
                                 </td>
                             </tr>
